@@ -72,6 +72,7 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize leaflet map, called from HTML.
  */
 initMap = () => {
+  try{
   self.newMap = L.map('map', {
         center: [40.722216, -73.987501],
         zoom: 12,
@@ -85,7 +86,10 @@ initMap = () => {
       'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets'
   }).addTo(newMap);
+}
+catch(error){
 
+}
   updateRestaurants();
 }
 /* window.initMap = () => {
@@ -158,10 +162,6 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
-  const name = document.createElement('h1');
-  name.innerHTML = restaurant.name;
-  li.append(name);
-
   const imageDiv = document.createElement('div');
   imageDiv.className= 'restaurant-image-div';
   li.append(imageDiv);
@@ -169,7 +169,12 @@ createRestaurantHTML = (restaurant) => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  // image.alt = restaurant.name;
   imageDiv.append(image);
+
+  const name = document.createElement('h1');
+  name.innerHTML = restaurant.name;
+  li.append(name);
 
   const detailsDiv = document.createElement('div');
   detailsDiv.className = 'details-div'
@@ -186,9 +191,9 @@ createRestaurantHTML = (restaurant) => {
   const more = document.createElement('a');
   more.innerHTML = 'View Details';
   more.href = DBHelper.urlForRestaurant(restaurant);
-  detailsDiv.append(more)
+  li.append(more)
 
-  return li
+  return li;
 }
 
 /**
@@ -216,3 +221,9 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 } */
+
+  navigator.serviceWorker.register('/sw.js').then(function(reg) {
+    if (!navigator.serviceWorker.controller) {
+      return;
+    }
+  });
