@@ -6,7 +6,7 @@ The **Restaurant Reviews** is a mobile-ready web application. The application is
 ## Instructions
 
 * Steps to get this code up and running.
-1. Clone the respository from github [website](https://github.com/Bhagyashri1808/Restaurant-reviews.git).
+1. Clone the respository from github (https://github.com/Bhagyashri1808/Restaurant-reviews.git).
 2. start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer.
 
 In a terminal, check the version of Python you have: `python -V`. If you have Python 2.x, spin up the server with `python -m SimpleHTTPServer 8000` (or some other port, if port 8000 is already in use.) For Python 3.x, you can use `python3 -m http.server 8000`. If you don't have Python installed, navigate to Python's [website](https://www.python.org/) to download and install the software.
