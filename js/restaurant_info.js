@@ -16,23 +16,23 @@ initMap = () => {
     if (error) { // Got an error!
       console.error(error);
     } else {
-      try{
-      self.newMap = L.map('map', {
-        center: [restaurant.latlng.lat, restaurant.latlng.lng],
-        zoom: 16,
-        scrollWheelZoom: false
-      });
-      L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: 'pk.eyJ1Ijoia2FiYnVyZWJoIiwiYSI6ImNqaW81czBsMzBtY3Azb3FoMjQ1Ymdnc2EifQ.0xBYeJ-s3t4OCHqnomBsGw',
-        maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        id: 'mapbox.streets'
-      }).addTo(newMap);
-    }catch(error){
+      try {
+        self.newMap = L.map('map', {
+          center: [restaurant.latlng.lat, restaurant.latlng.lng],
+          zoom: 16,
+          scrollWheelZoom: false
+        });
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
+          mapboxToken: 'pk.eyJ1Ijoia2FiYnVyZWJoIiwiYSI6ImNqaW81czBsMzBtY3Azb3FoMjQ1Ymdnc2EifQ.0xBYeJ-s3t4OCHqnomBsGw',
+          maxZoom: 18,
+          attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+            '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+          id: 'mapbox.streets'
+        }).addTo(newMap);
+      } catch (error) {
 
-    }
+      }
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
@@ -92,7 +92,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img'
-  // image.alt=restaurant.name;
+  image.alt=`Image of ${restaurant.name} restaurant`;
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
   const cuisine = document.getElementById('restaurant-cuisine');
@@ -131,7 +131,7 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
  */
 fillReviewsHTML = (reviews = self.restaurant.reviews) => {
   const container = document.getElementById('reviews-container');
-  const title = document.createElement('h2');
+  const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
@@ -153,28 +153,28 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
  */
 createReviewHTML = (review) => {
   const li = document.createElement('li');
-  li.className ='div-review';
+  li.className = 'div-review';
 
-  const divNameDate= document.createElement('div');
-  divNameDate.className= 'div-name-date';
+  const divNameDate = document.createElement('div');
+  divNameDate.className = 'div-name-date';
   li.appendChild(divNameDate);
 
   const name = document.createElement('span');
-  name.className="span-name";
+  name.className = "span-name";
   name.innerHTML = review.name;
   divNameDate.appendChild(name);
 
   const date = document.createElement('span');
-  date.className="span-date";
+  date.className = "span-date";
   date.innerHTML = review.date;
   divNameDate.appendChild(date);
 
   const divRatingComm = document.createElement('div')
-  divRatingComm.className= 'div-rating-comments';
+  divRatingComm.className = 'div-rating-comments';
   li.appendChild(divRatingComm);
 
   const rating = document.createElement('span');
-  rating.className='span-Rating';
+  rating.className = 'span-Rating';
   rating.innerHTML = `Rating: ${review.rating}`;
   divRatingComm.appendChild(rating);
 
@@ -188,7 +188,7 @@ createReviewHTML = (review) => {
 /**
  * Add restaurant name to the breadcrumb navigation menu
  */
-fillBreadcrumb = (restaurant=self.restaurant) => {
+fillBreadcrumb = (restaurant = self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;

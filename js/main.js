@@ -72,24 +72,23 @@ fillCuisinesHTML = (cuisines = self.cuisines) => {
  * Initialize leaflet map, called from HTML.
  */
 initMap = () => {
-  try{
-  self.newMap = L.map('map', {
-        center: [40.722216, -73.987501],
-        zoom: 12,
-        scrollWheelZoom: false
-      });
-  L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: 'pk.eyJ1Ijoia2FiYnVyZWJoIiwiYSI6ImNqaW81czBsMzBtY3Azb3FoMjQ1Ymdnc2EifQ.0xBYeJ-s3t4OCHqnomBsGw',
-    maxZoom: 18,
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-      '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-      'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-    id: 'mapbox.streets'
-  }).addTo(newMap);
-}
-catch(error){
+  try {
+    self.newMap = L.map('map', {
+      center: [40.722216, -73.987501],
+      zoom: 12,
+      scrollWheelZoom: false
+    });
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
+      mapboxToken: 'pk.eyJ1Ijoia2FiYnVyZWJoIiwiYSI6ImNqaW81czBsMzBtY3Azb3FoMjQ1Ymdnc2EifQ.0xBYeJ-s3t4OCHqnomBsGw',
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+        '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+        'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox.streets'
+    }).addTo(newMap);
+  } catch (error) {
 
-}
+  }
   updateRestaurants();
 }
 /* window.initMap = () => {
@@ -163,16 +162,25 @@ createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
 
   const imageDiv = document.createElement('div');
-  imageDiv.className= 'restaurant-image-div';
+  imageDiv.className = 'restaurant-image-div';
   li.append(imageDiv);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  // image.alt = restaurant.name;
+  //image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  var imgurlbase = DBHelper.imageUrlForRestaurant(restaurant);
+  var length_image = imgurlbase.length;
+  imgurlbase = imgurlbase.substring(0, length_image - 4);
+  const imgurl1x = imgurlbase + "_320.jpg";
+  const imgurl2x = imgurlbase + "_503.jpg";
+  const imgurl3x = imgurlbase + "_900.jpg";
+  image.src = imgurl1x;
+  image.srcset = `${imgurl1x} 320w, ${imgurl2x} 503w, ${imgurl3x} 900w`;
+  // image.sizes = `(max-width: 360) 320px, (max-width: 900px) 503px, 900px`;
+  image.alt = `Image of ${restaurant.name} restaurant`;
   imageDiv.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   li.append(name);
 
@@ -204,6 +212,7 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     // Add marker to the map
     const marker = DBHelper.mapMarkerForRestaurant(restaurant, self.newMap);
     marker.on("click", onClick);
+
     function onClick() {
       window.location.href = marker.options.url;
     }
@@ -222,8 +231,8 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 } */
 
-  navigator.serviceWorker.register('/sw.js').then(function(reg) {
-    if (!navigator.serviceWorker.controller) {
-      return;
-    }
-  });
+// navigator.serviceWorker.register('/sw.js').then(function(reg) {
+//   if (!navigator.serviceWorker.controller) {
+//     return;
+//   }
+// });
